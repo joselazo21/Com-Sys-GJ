@@ -9,59 +9,59 @@ import {
 
 @Entity('products')
 export class Product {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 50, unique: true, nullable: false })
-  codigo: string;
+  code: string;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
-  nombre: string;
+  name: string;
 
   @Column({ type: 'text', nullable: true })
-  descripcion: string;
+  description: string;
 
   @Column({ type: 'varchar', length: 100, nullable: false })
-  categoria: string;
+  category: string;
 
   @Column({
     type: 'decimal',
     precision: 10,
     scale: 2,
     nullable: false,
-    name: 'precio_compra_cup',
+    name: 'purchase_price_cup',
   })
-  precioCompraCup: number;
+  purchasePriceCup: number;
 
   @Column({
     type: 'decimal',
     precision: 10,
     scale: 2,
     nullable: false,
-    name: 'precio_compra_usd',
+    name: 'purchase_price_usd',
   })
-  precioCompraUsd: number;
+  purchasePriceUsd: number;
 
   @Column({
     type: 'decimal',
     precision: 10,
     scale: 2,
     nullable: false,
-    name: 'precio_venta_cup',
+    name: 'sale_price_cup',
   })
-  precioVentaCup: number;
+  salePriceCup: number;
 
   @Column({
     type: 'decimal',
     precision: 10,
     scale: 2,
     nullable: false,
-    name: 'precio_venta_usd',
+    name: 'sale_price_usd',
   })
-  precioVentaUsd: number;
+  salePriceUsd: number;
 
   @Column({ type: 'boolean', default: true })
-  activo: boolean;
+  active: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

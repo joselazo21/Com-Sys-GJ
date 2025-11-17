@@ -1,5 +1,4 @@
-export class ProductResponse {
-  id: number;
+export class ProductCreateDto {
   code: string;
   name: string;
   description?: string;
@@ -9,6 +8,4 @@ export class ProductResponse {
   salePriceCup: number;
   salePriceUsd: number;
   active: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
 }

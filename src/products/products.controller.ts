@@ -1,19 +1,45 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Delete,
+  Put,
+} from '@nestjs/common';
+import { ProductCreateDto } from './dto/create-product.dto';
+import { Product } from './entities/product.entity';
 import { ProductService } from './products.service';
-import { ProductResponse } from './dto/response-product.dto';
-
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
 
 @Controller('products')
 export class ProductsController {
-  constructor(private ProductService: ProductService) {}
+  constructor(private productService: ProductService) {}
 
   @Get()
-  findAll(): ProductResponse[] {
-    return this.ProductService.findAll();
+  findAll(): Promise<Product[]> {
+    return this.productService.findAll();
+  }
+
+  @Get(':productID')
+  findProduct(@Param('productID') productID: string): Promise<Product | null> {
+    return this.productService.findProduct(productID);
+  }
+
+  @Post()
+  createBook(@Body() newBook: ProductCreateDto): Promise<Product> {
+    return this.productService.createProduct(newBook);
+  }
+
+  @Delete(':bookId')
+  deleteBook(@Param('bookId') bookId: string): Promise<Product | null> {
+    return this.productService.deleteBook(bookId);
+  }
+
+  @Put(':bookId')
+  updateBook(
+    @Param('bookId') bookId: string,
+    @Body() newBook: ProductCreateDto,
+  ): Promise<Product | null> {
+    return this.productService.updateProduct(bookId, newBook);
   }
 }
