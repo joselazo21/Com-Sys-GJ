@@ -22,7 +22,7 @@ import * as fs from 'fs'; // ← IMPORTAR fs
     ProductsModule,
     CategoriesModule,
   ],
-  controllers: [AppController, CategoriesController],
-  providers: [AppService, CategoriesService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
