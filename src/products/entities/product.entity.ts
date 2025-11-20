@@ -5,7 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
+
+import { Category } from 'src/categories/entities/categories.entity';
 
 @Entity('products')
 export class Product {
@@ -71,4 +75,9 @@ export class Product {
 
   @DeleteDateColumn({ type: 'timestamp' })
   deletedAt: Date;
+
+  //Relationships
+  @JoinTable()
+  @ManyToMany(() => Category, (category) => category.products)
+  categories: Category[];
 }
