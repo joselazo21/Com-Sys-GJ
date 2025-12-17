@@ -1,0 +1,31 @@
+// auth/dto/register.dto.ts
+import { 
+  IsEmail, 
+  IsNotEmpty, 
+  IsString, 
+  MinLength 
+} from 'class-validator';
+import { UserRole } from '../../users/enums/user-role.enum';
+
+export class RegisterDto {
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(6)
+  password: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  fullName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  phone: string;
+}
