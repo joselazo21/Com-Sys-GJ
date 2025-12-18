@@ -1,28 +1,31 @@
-// app.module.ts
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ProductsModule } from './products/products.module';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoriesService } from './categories/categories.service';
-import { CategoriesController } from './categories/categories.controller';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
-import * as path from 'path'; // ← IMPORTAR path
-import * as fs from 'fs'; // ← IMPORTAR fs
-
+import { SalesModule } from './sales/sales.module';
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync({
-      useFactory: () => {
-        const configPath = path.join(process.cwd(), 'ormconfig.json');
-        const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-        return config;
-      },
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
+    TypeOrmModule.forRoot({
+      type: process.env.DB_TYPE as any,  // 'postgres', 'mysql', 'sqlite', etc.
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : undefined,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: process.env.NODE_ENV !== 'production',
+    }),
+    AuthModule,
+    UsersModule,
     ProductsModule,
     CategoriesModule,
+    SalesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
