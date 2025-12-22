@@ -7,9 +7,14 @@ import {
   DeleteDateColumn,
   JoinTable,
   ManyToMany,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import { Category } from 'src/categories/entities/categories.entity';
+import { SaleDetail } from 'src/sales/entities/sale-detail.entity';
+import { Inventory } from 'src/products/entities/inventory.entity';
 
 @Entity('products')
 export class Product {
@@ -67,6 +72,9 @@ export class Product {
   @Column({ type: 'boolean', default: true })
   active: boolean;
 
+  @Column({ name: 'inventory_id' })
+  inventoryID: string;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
@@ -80,4 +88,11 @@ export class Product {
   @JoinTable()
   @ManyToMany(() => Category, (category) => category.products)
   categories: Category[];
+
+  @OneToMany(() => SaleDetail, (detail) => detail.product)
+  saleDetails: SaleDetail[];
+
+  @OneToOne(() => Inventory, (inventory) => inventory.product)
+  @JoinColumn({ name: 'inventory_id' })
+  inventory: Inventory;
 }

@@ -78,7 +78,7 @@ export class AuthService {
     });
   }
 
-  private async getTokens(payload: any) {
+  private async     getTokens(payload: any) {
   const [accessToken, refreshToken] = await Promise.all([
     this.jwtService.signAsync(
       payload,
@@ -103,16 +103,13 @@ export class AuthService {
 }
 
   async register(createUserDto: any) {
-    // Check if user already exists
     const userExists = await this.usersService.findByUsername(createUserDto.username);
     if (userExists) {
       throw new BadRequestException('User already exists');
     }
 
-    // Create new user
     const newUser = await this.usersService.create(createUserDto);
     
-    // Generate tokens
     const tokens = await this.getTokens({
       username: newUser.username,
       sub: newUser.id,
