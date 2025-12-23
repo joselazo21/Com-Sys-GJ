@@ -9,6 +9,7 @@ export class ProductCreateDto {
   salePriceCup: number;
   salePriceUsd: number;
   active: boolean;
+  units: number;
 
   @IsString({ each: true })
   @IsArray()

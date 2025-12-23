@@ -10,7 +10,7 @@ import { SaleDetail } from './entities/sale-detail.entity';
 import { SaleCreateDTO } from './dto/sale-create.dto';
 import { Product } from 'src/products/entities/product.entity';
 import { SalesReportDTO } from './dto/sales-report.dto';
-import { SailDetailCreateDTO } from './dto/sale-create-detail.dto';
+import { SaleDetailCreateDTO } from './dto/sale-create-detail.dto';
 import { Inventory } from 'src/products/entities/inventory.entity';
 
 @Injectable()
@@ -79,7 +79,7 @@ export class SalesService {
     }
   }
 
-  private async verificarProductosYStock(detailsDTO: SailDetailCreateDTO[]) {
+  private async verificarProductosYStock(detailsDTO: SaleDetailCreateDTO[]) {
     const resultados = await Promise.all(
       detailsDTO.map(async (detailsDTO) => {
         const producto = await this.productoRepository.findOne({
@@ -93,10 +93,7 @@ export class SalesService {
           );
         }
 
-        if (
-          !producto.inventory ||
-          producto.inventory.cantidad < detailsDTO.quantity
-        ) {
+        if (producto.units < detailsDTO.quantity) {
           throw new BadRequestException(
             `Stock insuficiente para producto: ${producto.name}`,
           );

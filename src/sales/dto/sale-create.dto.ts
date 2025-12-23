@@ -6,7 +6,7 @@ import {
   IsOptional,
   ValidateNested,
 } from 'class-validator';
-import { SailDetailCreateDTO } from './sale-create-detail.dto';
+import { SaleDetailCreateDTO } from './sale-create-detail.dto';
 
 export enum payMethod {
   CASH = 'CASH',
@@ -28,6 +28,6 @@ export class SaleCreateDTO {
 
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => SailDetailCreateDTO)
-  detalles: SailDetailCreateDTO[];
+  @Type(() => SaleDetailCreateDTO)
+  detalles: SaleDetailCreateDTO[];
 }

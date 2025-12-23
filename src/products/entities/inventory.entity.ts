@@ -30,11 +30,6 @@ export class Inventory {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   ultimaActualizacion: Date;
 
-  // RELACIÓN 1:1 con Producto (Cada inventario pertenece a un producto)
-  @OneToOne(() => Product, (producto) => producto.inventory)
-  @JoinColumn({ name: 'product_id' })
-  product: Product;
-
   // Métodos de negocio
   necesitaReposicion(): boolean {
     return this.cantidad <= this.stockMinimo;

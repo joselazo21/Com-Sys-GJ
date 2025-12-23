@@ -6,7 +6,7 @@ import {
   IsUUID,
 } from 'class-validator';
 
-export class SailDetailCreateDTO {
+export class SaleDetailCreateDTO {
   @IsUUID()
   @IsNotEmpty()
   productID: string;

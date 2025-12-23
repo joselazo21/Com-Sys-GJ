@@ -33,6 +33,9 @@ export class Product {
   @Column({ type: 'varchar', length: 100, nullable: false })
   category: string;
 
+  @Column({ type: 'integer' })
+  units: number;
+
   @Column({
     type: 'decimal',
     precision: 10,
@@ -91,8 +94,4 @@ export class Product {
 
   @OneToMany(() => SaleDetail, (detail) => detail.product)
   saleDetails: SaleDetail[];
-
-  @OneToOne(() => Inventory, (inventory) => inventory.product)
-  @JoinColumn({ name: 'inventory_id' })
-  inventory: Inventory;
 }

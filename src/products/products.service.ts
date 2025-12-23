@@ -30,11 +30,9 @@ export class ProductService {
   async findCategoriesbyName(names: string[]): Promise<Category[]> {
     let result: Category[] = [];
 
-    result = await this.categoriesRepository.find({
-      where: {
-        name: In(names),
-      },
-    });
+    result = await this.categoriesRepository.find();
+
+    console.log(result);
 
     return result;
   }
